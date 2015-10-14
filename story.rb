@@ -44,7 +44,7 @@ end
 
 class Player < Creatures
 	attr_accessor :life, :attack, :defense, :inventory
-	def initialize(life=25, attack=0, defense=0, inventory=[])
+	def initialize(life=27, attack=0, defense=0, inventory=[])
 		@life = life
 		@attack = attack
 		@defense = defense
