@@ -43,9 +43,8 @@ class Creatures
 end
 
 class Player < Creatures
-	attr_accessor :life, :attack, :defense, :inventory, :name
-	def initialize(life=27, attack=0, defense=0, inventory=[])
-		@name = name
+	attr_accessor :life, :attack, :defense, :inventory
+	def initialize(life=30, attack=0, defense=0, inventory=[])
 		@life = life
 		@attack = attack
 		@defense = defense
@@ -60,8 +59,8 @@ class Monster < Creatures
 	end
 end
 #auto created player/monsters
-hero = Player.new
-dragon = Monster.new(35)
+@hero = Player.new
+@dragon = Monster.new(30)
 
 def start
 	puts <<-INTRO
@@ -79,18 +78,18 @@ def start
 
 	sleep 7
 	puts "First I need to know your name:".white.on_red.blink
-	hero.name = gets.chomp
-	puts "Welcome #{hero.name}!"
+	@name = gets.chomp
+	puts "Welcome #{@name}!"
 	sleep 1
 	puts <<-ONCE
-	Once upon a time in a galaxy far, far, away lived #{hero.name}....
+	Once upon a time in a galaxy far, far, away lived #{@name}....
 	You are hanging out in your luxury hut bored out of your mind.  You think
 	to yourself, "Hmmm..would it be fun to see whats around me?"
 	Local rumor has it that a large cat dragon is torturing  100 little cats! This
 	sick creature lines up the cats and puts hats on them and then removes them,
 	all day long!  This surely is the purest form of evil!
 
-	Let fate decide your direction #{hero.name}, time to roll that 4 sided die!"
+	Let fate decide your direction #{@name}, time to roll that 4 sided die!"
 	ONCE
 	sleep 6
 	puts "Please type roll to roll the die.".blue
@@ -105,7 +104,7 @@ end
 
 def roll_dice
 	roll = rand(4)
-	puts "ok, #{hero.name}, it looks like you rolled a #{roll}!"
+	puts "ok, #{@name}, it looks like you rolled a #{roll}!"
 	if roll > 2
 		north
 	else
@@ -124,67 +123,67 @@ end
 # end
 #
 # def sword
-# 	hero.attack += 2
+# 	@hero.attack += 2
 # end
 #
 # def axe
-# 	hero.attack += 2
+# 	@hero.attack += 2
 # end
 #
 # def shield
-# 	hero.defense += 2
+# 	@hero.defense += 2
 # end
 #
 # def gloves
-# 	hero.defense += 2
+# 	@hero.defense += 2
 # end
 #
 # def loot
 # 	roll = rand(20)
 # 	if roll <= 5
-# 		if hero.inventory.include?("sword")
+# 		if @hero.inventory.include?("sword")
 # 			puts "You found another sword, but you can only have 1! Sorry!"
 # 		else
-# 		hero.inventory << "sword"
+# 		@hero.inventory << "sword"
 # 		puts "Hell fire! You found a sword! Extra attack damage! Yeehaw!".white.on_red.blink
 # 		sword
 # 		end
 # 	elsif roll.between?(6, 10)
-# 		if hero.inventory.include?("shield")
+# 		if @hero.inventory.include?("shield")
 # 			puts "You found another shield, but you can only have 1! Sorry!"
 # 		else
-# 		hero.inventory << "shield"
+# 		@hero.inventory << "shield"
 # 		puts "Damn son, you got a shield! Defense be better!".white.on_blue.blink
 # 		shield
 # 		end
 # 	elsif roll.between?(11, 15)
-# 		if hero.inventory.include?("axe")
+# 		if @hero.inventory.include?("axe")
 # 			puts "You found another axe, but you can only have 1! Sorry!"
 # 		else
-# 		hero.inventory << "axe"
+# 		@hero.inventory << "axe"
 # 		puts "Hell fire! You found an axe! Extra attack damage! Yeehaw!".white.on_red.blink
 # 		axe
 # 		end
 # 	else
-# 		if hero.inventory.include?("gloves")
+# 		if @hero.inventory.include?("gloves")
 # 			puts "You found another gloves, but you can only have 1! Sorry!"
 # 		else
-# 		hero.inventory << "gloves"
+# 		@hero.inventory << "gloves"
 # 		puts "Damn son, you got gloves! Defense be better!".white.on_blue.blink
 # 		gloves
 # 		end
 # 	end
-# 	puts "Your inventory now includes #{hero.inventory}!"
+# 	puts "Your inventory now includes #{@hero.inventory}!"
 # 	sleep 3
 # end
 
 def encounter
-	random_monster = Monster.new
+	@random_monster = Monster.new
 	chance = rand(4)
 	if chance >= 2
 		puts "A monster has appeared! You must fight!"
-		while hero.life > 0 && random_monster.life > 0 do
-			hero.fight(hero, random_monster)
+		while @hero.life > 0 && @random_monster.life > 0 do
+			@hero.fight(@hero, @random_monster)
 		end
 	else
 		puts "So far so good, all is clear!"
@@ -223,7 +222,7 @@ end
 # 	if prompt == "yes"
 # 		search
 # 	else
-# 		puts "You dummy, you could have found some good #%&!"
+# 		puts "You dummy, you could have found some good @#%&!"
 # 	end
 # end
 
@@ -261,7 +260,7 @@ def castle
 	if prompt == "yes"
 		puts "You search the area and come across a healing potion! You drink the potion."
 		sleep 1
-		hero.potion(hero)
+		@hero.potion(@hero)
 	end
 	sleep 1
 	encounter
@@ -286,14 +285,14 @@ def dragon
 	sleep 2
 	puts "The dragon says 'Stupid creature! I kill you now!'".red.blink
 	sleep 2
-	if hero.inventory.length > 0
-		puts "You got this! You have a#{hero.inventory} to help you!"
+	if @hero.inventory.length > 0
+		puts "You got this! You have a#{@hero.inventory} to help you!"
 	else
 		puts "You don't have a choice, you have to battle!"
 	end
 	continue_adventure
-	while hero.life > 0 && dragon.life > 0 do
-		hero.fight(hero, dragon)
+	while @hero.life > 0 && @dragon.life > 0 do
+		@hero.fight(@hero, @dragon)
 	end
 end
 
@@ -345,7 +344,7 @@ end
 # the actual program starts here! Not sure if thats a good or bad thing..
 start
 
-if dragon.life <= 0
+if @dragon.life <= 0
 	puts "You killed the dragon, the kingdom is now safe!".yellow.on_black.blink
 end
 # future add-ons include: evolve the combat to be more interactive
