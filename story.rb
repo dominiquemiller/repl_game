@@ -6,6 +6,16 @@ require "./storymodule.rb"
 include StoryModule
 #master class that all other classes inherit from
 class Creatures
+	attr_accessor :life, :attack, :defense, :inventory, :name
+
+	def initialize(life=30, attack=0, defense=0, inventory=[])
+		@name = name
+		@life = life
+		@attack = attack
+		@defense = defense
+		@inventory = inventory
+	end
+
 	def fight(player, monster)
 		damage = rand(8) + player.attack
 		if damage >= 0
@@ -43,20 +53,11 @@ class Creatures
 end
 
 class Player < Creatures
-	attr_accessor :life, :attack, :defense, :inventory
-	def initialize(life=30, attack=0, defense=0, inventory=[])
-		@life = life
-		@attack = attack
-		@defense = defense
-		@inventory = inventory
-	end
+
 end
 
 class Monster < Creatures
-	attr_accessor :life
-	def initialize(life=5)
-		@life = life
-	end
+
 end
 #auto created player/monsters
 @hero = Player.new
@@ -78,18 +79,18 @@ def start
 
 	sleep 7
 	puts "First I need to know your name:".white.on_red.blink
-	@name = gets.chomp
-	puts "Welcome #{@name}!"
+	@hero.name = gets.chomp
+	puts "Welcome #{@hero.name}!"
 	sleep 1
 	puts <<-ONCE
-	Once upon a time in a galaxy far, far, away lived #{@name}....
+	Once upon a time in a galaxy far, far, away lived #{@hero.name}....
 	You are hanging out in your luxury hut bored out of your mind.  You think
 	to yourself, "Hmmm..would it be fun to see whats around me?"
 	Local rumor has it that a large cat dragon is torturing  100 little cats! This
 	sick creature lines up the cats and puts hats on them and then removes them,
 	all day long!  This surely is the purest form of evil!
 
-	Let fate decide your direction #{@name}, time to roll that 4 sided die!"
+	Let fate decide your direction #{@hero.name}, time to roll that 4 sided die!"
 	ONCE
 	sleep 6
 	puts "Please type roll to roll the die.".blue
@@ -104,7 +105,7 @@ end
 
 def roll_dice
 	roll = rand(4)
-	puts "ok, #{@name}, it looks like you rolled a #{roll}!"
+	puts "ok, #{@hero.name}, it looks like you rolled a #{roll}!"
 	if roll > 2
 		north
 	else
@@ -112,73 +113,8 @@ def roll_dice
 	end
 end
 
-# def search
-# 	rand(20)
-# 	if rand <= 18
-# 		puts "You search the area and find something!"
-# 		loot
-# 	else
-# 		puts "You search the area and find nothing."
-# 	end
-# end
-#
-# def sword
-# 	@hero.attack += 2
-# end
-#
-# def axe
-# 	@hero.attack += 2
-# end
-#
-# def shield
-# 	@hero.defense += 2
-# end
-#
-# def gloves
-# 	@hero.defense += 2
-# end
-#
-# def loot
-# 	roll = rand(20)
-# 	if roll <= 5
-# 		if @hero.inventory.include?("sword")
-# 			puts "You found another sword, but you can only have 1! Sorry!"
-# 		else
-# 		@hero.inventory << "sword"
-# 		puts "Hell fire! You found a sword! Extra attack damage! Yeehaw!".white.on_red.blink
-# 		sword
-# 		end
-# 	elsif roll.between?(6, 10)
-# 		if @hero.inventory.include?("shield")
-# 			puts "You found another shield, but you can only have 1! Sorry!"
-# 		else
-# 		@hero.inventory << "shield"
-# 		puts "Damn son, you got a shield! Defense be better!".white.on_blue.blink
-# 		shield
-# 		end
-# 	elsif roll.between?(11, 15)
-# 		if @hero.inventory.include?("axe")
-# 			puts "You found another axe, but you can only have 1! Sorry!"
-# 		else
-# 		@hero.inventory << "axe"
-# 		puts "Hell fire! You found an axe! Extra attack damage! Yeehaw!".white.on_red.blink
-# 		axe
-# 		end
-# 	else
-# 		if @hero.inventory.include?("gloves")
-# 			puts "You found another gloves, but you can only have 1! Sorry!"
-# 		else
-# 		@hero.inventory << "gloves"
-# 		puts "Damn son, you got gloves! Defense be better!".white.on_blue.blink
-# 		gloves
-# 		end
-# 	end
-# 	puts "Your inventory now includes #{@hero.inventory}!"
-# 	sleep 3
-# end
-
 def encounter
-	@random_monster = Monster.new
+	@random_monster = Monster.new(5)
 	chance = rand(4)
 	if chance >= 2
 		puts "A monster has appeared! You must fight!"
@@ -214,17 +150,6 @@ def travel_doc
 
 	EOP
 end
-
-
-# def scavenge
-# 	puts " Would you like to scavenge the area? Yes or no?"
-# 	prompt = gets.chomp.downcase
-# 	if prompt == "yes"
-# 		search
-# 	else
-# 		puts "You dummy, you could have found some good @#%&!"
-# 	end
-# end
 
 def south
 	puts "You decide to head south!"
